@@ -8,9 +8,7 @@ export default (app) => {
 
   app.use("/v1/assignments", authenticate, assignmentRouter);
 
-  // TODO: handle 404 error
-
   app.use((req, res) => {
-    setResponse(res, 405);
+    setResponse(res, 404);
   });
 };

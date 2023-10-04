@@ -9,8 +9,6 @@ export const loadAccountsFromCSV = async () => {
     await databaseConnection.authenticate();
     console.log("Connected to the database for loading users from CSV file");
 
-    await databaseConnection.sync({ force: false });
-
     fs.createReadStream("./opt/user.csv")
       .pipe(csvParser())
       .on("data", async (row) => {

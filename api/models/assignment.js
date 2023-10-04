@@ -38,6 +38,11 @@ const Assignment = databaseConnection.define(
   {
     createdAt: "assignment_created",
     updatedAt: "assignment_updated",
+    scopes: {
+      withoutAccountId: {
+        attributes: { exclude: ["AccountId"] },
+      },
+    },
   }
 );
 
