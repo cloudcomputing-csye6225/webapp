@@ -1,0 +1,56 @@
+name: webapp
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  db-integration-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check MySQL Running status
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl
+          sudo systemctl start mysql
+          mysql -V
+          mysql -u root -p"{{secrets.MY_SQL_PASSWORD}}" -e "CREATE DATABASE mydb;"
+
+      - name: Set up Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Set Environment Variables
+        env:
+          PORT: ${{ secrets.PORT }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DIALECT: ${{ secrets.DB_DIALECT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+        run: |
+          echo "PORT=$PORT" >> .env
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_PORT=$DB_PORT" >> .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+          echo "DB_DIALECT=$DB_DIALECT" >> .env
+          echo "DB_NAME=$DB_NAME" >> .env
+
+      - name: Check Versions and Install Dependencies
+        run: |
+          pwd
+          ls -al
+          node -v
+          npm -v
+          npm install
+          ls -al
+
+      - name: Run Integration Test
+        run: npm test
