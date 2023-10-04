@@ -13,12 +13,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check MySQL Running status
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
-          sudo systemctl start mysql
-          mysql -V
-          mysql -u root -p"{{ secrets.MY_SQL_PASSWORD }}" -e "CREATE DATABASE mydb;"
+        uses: mirromutth/mysql-action@v1.1
+        with: 
+          mysql database: mydb
+          mysql root password: root
 
       - name: Set up Node
         uses: actions/setup-node@v3
