@@ -2,15 +2,6 @@ import * as assignmentService from "./../services/assignment-service.js";
 import { setResponse } from "../utils/response.js";
 import { Sequelize } from "sequelize";
 
-export const getAll = async (request, response) => {
-  try {
-    const assignments = await assignmentService.getAllAssignments();
-    setResponse(response, 200, assignments);
-  } catch (error) {
-    setResponse(response, 400, error);
-  }
-};
-
 export const post = async (request, response) => {
   try {
     const assignment = await assignmentService.createAssignment(
@@ -28,6 +19,28 @@ export const post = async (request, response) => {
     setResponse(response, 400, error);
   }
 };
+
+export const getAll = async (request, response) => {
+  try {
+    const assignments = await assignmentService.getAllAssignments();
+    setResponse(response, 200, assignments);
+  } catch (error) {
+    setResponse(response, 400, error);
+  }
+};
+
+export const deleteById = async (request, response) => {
+  try {
+    const { status } = await assignmentService.deleteAssignment(
+      request.params.id,
+      request.user.AccountId
+    );
+    setResponse(response, status);
+  } catch (error) {
+    setResponse(response, 400, error);
+  }
+};
+
 
 export const getById = async (request, response) => {
   try {
@@ -61,14 +74,3 @@ export const updateById = async (request, response) => {
   }
 };
 
-export const deleteById = async (request, response) => {
-  try {
-    const { status } = await assignmentService.deleteAssignment(
-      request.params.id,
-      request.user.AccountId
-    );
-    setResponse(response, status);
-  } catch (error) {
-    setResponse(response, 400, error);
-  }
-};

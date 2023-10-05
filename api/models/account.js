@@ -26,7 +26,7 @@ const Account = databaseConnection.define(
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: { msg: "Must be a valid email address" },
+        isEmail: { msg: "Email is invalid" },
       },
     },
   },
