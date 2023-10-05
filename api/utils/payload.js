@@ -11,6 +11,11 @@ export const checkPayloadBody = (req, res, next) => {
 
 export const checkPayLoadForPost = (compulsory, optional) => {
   return (req, res, next) => {
+    const params = Object.keys(req.query).length;
+    if (params) {
+      setResponse(res, 400);
+      return;
+    }
     const check = Object.keys(req.body).length;
     if (check) {
       const keys = Object.keys(req.body);
@@ -44,6 +49,11 @@ export const checkPayLoadForPost = (compulsory, optional) => {
 
 export const checkPayLoadForPutRequest = (schema, optional) => {
   return (req, res, next) => {
+    const params = Object.keys(req.query).length;
+    if (params) {
+      setResponse(res, 400);
+      return;
+    }
     const requestBodyKeys = Object.keys(req.body);
 
     // Check if there are any properties outside the schema

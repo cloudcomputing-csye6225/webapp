@@ -7,16 +7,16 @@ import {
   checkPayloadBody,
 } from "../utils/payload.js";
 
-const schema = ["name", "points", "num_of_attempts", "deadline"];
+const schemaFields = ["name", "points", "num_of_attempts", "deadline"];
 
-const optional = ["assignment_created", "assignment_updated"];
+const optionalFields = ["assignment_created", "assignment_updated"];
 
 const router = express.Router();
 
 router
   .route("/")
   .get(checkPayloadBody, assignmentController.getAll)
-  .post(checkPayLoadForPost(schema, optional), assignmentController.post)
+  .post(checkPayLoadForPost(schemaFields, optionalFields), assignmentController.post)
   .all((req, res) => {
     setResponse(res, 405);
   });
@@ -26,7 +26,7 @@ router
   .get(checkPayloadBody, assignmentController.getById)
   .delete(checkPayloadBody, assignmentController.deleteById)
   .put(
-    checkPayLoadForPutRequest(schema, optional),
+    checkPayLoadForPutRequest(schemaFields, optionalFields),
     assignmentController.updateById
   )
   .all((req, res) => {

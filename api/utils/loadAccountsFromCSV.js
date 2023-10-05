@@ -7,7 +7,7 @@ import Account from "../models/account.js";
 export const loadAccountsFromCSV = async () => {
   try {
     await databaseConnection.authenticate();
-    console.log("Connected to the database for loading users from CSV file");
+    console.log("Connected to the database");
 
     fs.createReadStream("./opt/user.csv")
       .pipe(csvParser())
@@ -20,12 +20,8 @@ export const loadAccountsFromCSV = async () => {
           if (!existingAccount) {
             row.password = await bcrypt.hash(row.password, 10);
             await Account.create(row);
-            console.log(`Created account with email: ${row.email}`);
           }
         } catch (error) {
-          console.error(
-            `Error creating account for ${row.email}: ${error.message}`
-          );
         }
       })
       .on("end", () => {
@@ -33,7 +29,7 @@ export const loadAccountsFromCSV = async () => {
       });
   } catch (error) {
     console.error(
-      "Error connecting to the database for loading users from CSV file",
+      "Error connecting to the database",
       error
     );
   }

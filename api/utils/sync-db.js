@@ -12,7 +12,6 @@ export const syncDatabase = async () => {
 
     await loadAccountsFromCSV();
   } catch (error) {
-    console.log("sync-db.js - syncDatabase error - ", error);
     console.log(error);
   }
 };
