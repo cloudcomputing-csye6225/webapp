@@ -12,11 +12,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Check MySQL Running status
-      #   uses: mirromutth/mysql-action@v1.1
-      #   with: 
-      #     mysql database: mydb
-      #     mysql root password: root
+      - name: Check MySQL Running status
+        uses: mirromutth/mysql-action@v1.1
+        with: 
+          mysql database: mydb
+          mysql root password: root
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -26,20 +26,20 @@ jobs:
       - name: Set Environment Variables
         env:
           PORT: ${{ secrets.PORT }}
-          # DB_HOST: ${{ secrets.DB_HOST }}
-          # DB_PORT: ${{ secrets.DB_PORT }}
-          # DB_USER: ${{ secrets.DB_USER }}
-          # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          # DB_DIALECT: ${{ secrets.DB_DIALECT }}
-          # DB_NAME: ${{ secrets.DB_NAME }}
-        # run: |
-        #   echo "PORT=$PORT" >> .env
-        #   echo "DB_HOST=$DB_HOST" >> .env
-        #   echo "DB_PORT=$DB_PORT" >> .env
-        #   echo "DB_USER=$DB_USER" >> .env
-        #   echo "DB_PASSWORD=$DB_PASSWORD" >> .env
-        #   echo "DB_DIALECT=$DB_DIALECT" >> .env
-        #   echo "DB_NAME=$DB_NAME" >> .env
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_DIALECT: ${{ secrets.DB_DIALECT }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+        run: |
+          echo "PORT=$PORT" >> .env
+          echo "DB_HOST=$DB_HOST" >> .env
+          echo "DB_PORT=$DB_PORT" >> .env
+          echo "DB_USER=$DB_USER" >> .env
+          echo "DB_PASSWORD=$DB_PASSWORD" >> .env
+          echo "DB_DIALECT=$DB_DIALECT" >> .env
+          echo "DB_NAME=$DB_NAME" >> .env
 
       - name: Check Versions and Install Dependencies
         run: |
