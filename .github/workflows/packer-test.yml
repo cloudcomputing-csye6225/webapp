@@ -54,7 +54,7 @@ jobs:
         
         - name: Run packer validate
           run: |
-            if ! packer validate -evaluate-datasources --var-file=./packer/ami.pkr.hcl ./packer/ami.pkr.hcl; then
+            if ! packer validate -evaluate-datasources --var-file=./packer/variables.pkrvars.hcl ./packer/ami.pkr.hcl; then
             echo "******** Validation check failed ********* "
             exit 1
             fi 
