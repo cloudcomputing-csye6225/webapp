@@ -16,9 +16,6 @@ export const checkConnection = async (req, res) => {
     case 200:
       setResponse(res, 200);
       break;
-    case -4078:
-      setResponse(res, 503);
-      break;
     default:
       setResponse(res, 500);
       break;
