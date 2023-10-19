@@ -97,11 +97,11 @@ source "amazon-ebs" "my-ami" {
   ami_name        = "csye6225_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   ami_description = "${var.ami_description}"
   ami_regions     = ["${var.ami_accessible_regions}"]
-  vpc_id          = "${var.vpc_id}"
-  instance_type   = "${var.instance_type}"
-  source_ami      = "${var.source_ami}"
-  ssh_username    = "${var.ssh_username}"
-  ami_users       = ["${var.ami_accessible_users}"]
+  // vpc_id          = "${var.vpc_id}"
+  instance_type = "${var.instance_type}"
+  source_ami    = "${var.source_ami}"
+  ssh_username  = "${var.ssh_username}"
+  ami_users     = ["${var.ami_accessible_users}"]
 
   aws_polling {
     delay_seconds = 120
