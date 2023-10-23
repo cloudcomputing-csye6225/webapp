@@ -12,7 +12,6 @@ packer {
   default = "us-east-1"
 
 
-
 }
 
 variable "source_ami" {
