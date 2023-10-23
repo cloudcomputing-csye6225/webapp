@@ -10,7 +10,6 @@ packer {
 variable "aws_region" {
   type    = string
   default = "us-east-1"
-
 }
 
 variable "source_ami" {
@@ -80,7 +79,7 @@ variable "file_destination" {
 
 variable "shell_source" {
   type    = string
-  default = "./packer/script.sh"
+  default = ".../packer/script.sh"
 }
 variable "root_device_type" {
   type    = string
