@@ -119,11 +119,6 @@ source "amazon-ebs" "my-ami" {
 build {
   sources = ["source.amazon-ebs.my-ami"]
 
-  provisioner "file" {
-    source      = "${var.file_source}"
-    destination = "${var.file_destination}"
-  }
-
   provisioner "shell" {
     scripts      = ["${var.shell_source}"]
     pause_before = "10s"
