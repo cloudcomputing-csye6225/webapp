@@ -79,7 +79,7 @@ variable "file_destination" {
 
 variable "shell_source" {
   type    = string
-  default = "./packer/script.sh"
+  default = "./packer/script2.sh"
 }
 variable "root_device_type" {
   type    = string
