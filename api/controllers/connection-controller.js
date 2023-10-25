@@ -17,7 +17,7 @@ export const checkConnection = async (req, res) => {
       setResponse(res, 200);
       break;
     default:
-      setResponse(res, 500);
+      setResponse(res, 503);
       break;
   }
 };
