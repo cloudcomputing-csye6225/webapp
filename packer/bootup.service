@@ -1,6 +1,6 @@
 [Unit]
 Description=csye6225_webapp
-ConditionPathExists=/opt/webapp/index.js
+ConditionPathExists=/opt/webapp/server.js
 After=network.target
 
 [Service]
