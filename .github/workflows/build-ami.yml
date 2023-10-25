@@ -78,6 +78,8 @@ jobs:
           echo volume_type=\"${{ vars.VOLUME_TYPE }}\" >> ./packer/variables.pkrvars.hcl
           echo file_source=\"${{ vars.FILE_SOURCE }}\" >> ./packer/variables.pkrvars.hcl
           echo file_destination=\"${{ vars.FILE_DESTINATION }}\" >> ./packer/variables.pkrvars.hcl
+          echo service_file_src=\"${{ vars.SERVICE_FILE_SRC }}\" >> ./packer/variables.pkrvars.hcl
+          echo service_file_destination=\"${{ vars.SERVICE_FILE_DESTINATION }}\" >> ./packer/variables.pkrvars.hcl
           echo shell_source=\"${{ vars.SHELL_SOURCE }}\" >> ./packer/variables.pkrvars.hcl
           echo root_device_type=\"${{ vars.ROOT_DEVICE_TYPE }}\" >> ./packer/variables.pkrvars.hcl
           echo virtualization_type=\"${{ vars.VIRTUALIZATION_TYPE }}\" >> ./packer/variables.pkrvars.hcl
