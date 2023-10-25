@@ -35,11 +35,11 @@ echo "******* Create group and user *******"
 sudo groupadd csye6225_webapp
 sudo useradd -s /bin/false -g csye6225_webapp -d /opt/csye6225_webapp -m csye6225_webapp
 
+sudo cp /tmp/bootup.service /lib/systemd/system/bootup.service
+
 sudo systemctl daemon-reload
 sudo systemctl enable bootup.service
 sudo systemctl start bootup.service
 sudo systemctl status bootup.service
-
-sudo cp /tmp/bootup.service /lib/systemd/system/bootup.service
 
 echo "******* Stopped executing script file *******"
