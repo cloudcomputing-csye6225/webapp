@@ -17,44 +17,29 @@ echo "******* Installing unzip *******"
 sudo apt install unzip
 unzip -v
 
-echo "******* Installing mariadb *******"
-sudo apt install -y mariadb-server
-mysql -V
+echo "******* Moving zip file location to opt folder *******"
+sudo cp /tmp/webapp.zip /opt/webapp.zip
 
-# echo "******* Creating .env file *******"
-# cat<<EOL > .env
-# PORT=8080
-# DB_HOST=127.0.0.1
-# DB_PORT=3306
-# DB_USER=admin
-# DB_PASSWORD=password
-# DB_NAME=mydb
-# DB_DIALECT=mysql
-# EOL
-
-# echo "****** Checking .env file content *******"
-# cat .env
-
-echo "GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'admin' WITH GRANT OPTION;" | sudo mariadb
-echo "FLUSH PRIVILEGES;" | sudo mariadb
-echo "SHOW DATABASES;" | sudo mariadb
-echo "CREATE database mydb;" |sudo mariadb
-echo "SHOW DATABASES;" | sudo mariadb
-echo "exit" | sudo mariadb
-sudo systemctl status mariadb
-sudo mysqladmin version
-
+cd /opt || exit
 sudo mkdir webapp
 sudo unzip webapp.zip -d webapp
 sudo apt-get remove -y git
 
-pwd
 ls -al
 cd webapp/ || exit
-pwd
 
 echo "********* Installing Dependencies *******"
 sudo npm install
 
+echo "******* Create group and user *******"
+sudo groupadd csye6225_webapp
+sudo useradd -s /bin/false -g csye6225_webapp -d /opt/csye6225_webapp -m csye6225_webapp
+
+sudo systemctl daemon-reload
+sudo systemctl enable bootup.service
+sudo systemctl start bootup.service
+sudo systemctl status bootup.service
+
+sudo cp /tmp/bootup.service /lib/systemd/system/bootup.service
 
 echo "******* Stopped executing script file *******"

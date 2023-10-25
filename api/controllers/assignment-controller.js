@@ -8,7 +8,7 @@ export const post = async (request, response) => {
       request.body,
       request.user.AccountId
     );
-    setResponse(response, 200, assignment);
+    setResponse(response, 201, assignment);
   } catch (error) {
     if (error instanceof Sequelize.DatabaseError) {
       error = error.message;

@@ -74,13 +74,14 @@ variable "file_source" {
 
 variable "file_destination" {
   type    = string
-  default = "~/webapp.zip"
+  default = "/tmp/webapp.zip"
 }
 
 variable "shell_source" {
   type    = string
-  default = ".../packer/script.sh"
+  default = "./packer/script.sh"
 }
+
 variable "root_device_type" {
   type    = string
   default = "ebs"
@@ -90,6 +91,17 @@ variable "virtualization_type" {
   type    = string
   default = "hvm"
 }
+
+variable "service_file_src" {
+  type    = string
+  default = "./packer/bootup.service"
+}
+
+variable "service_file_destination" {
+  type    = string
+  default = "/tmp/bootup.service"
+}
+
 
 source "amazon-ebs" "my-ami" {
   profile         = "${var.profile}"
@@ -122,6 +134,11 @@ build {
   provisioner "file" {
     source      = "${var.file_source}"
     destination = "${var.file_destination}"
+  }
+
+  provisioner "file" {
+    source      = "${var.service_file_src}"
+    destination = "${var.service_file_destination}"
   }
 
   provisioner "shell" {
