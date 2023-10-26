@@ -17,13 +17,15 @@ echo "******* Installing unzip *******"
 sudo apt install unzip
 unzip -v
 
-echo "******* Moving zip file location to opt folder *******"
-sudo cp /tmp/webapp.zip /opt/webapp.zip
+echo "******* Create group and user *******"
+sudo groupadd csye6225_webapp
+sudo useradd -s /bin/false -g csye6225_webapp -d /opt/csye6225_webapp -m csye6225_webapp
 
-cd /opt || exit
+sudo cp /tmp/webapp.zip /opt/csye6225/webapp.zip
+
+cd /opt/csye6225 || exit
 sudo mkdir webapp
 sudo unzip webapp.zip -d webapp
-sudo apt-get remove -y git
 
 ls -al
 cd webapp/ || exit
@@ -31,9 +33,9 @@ cd webapp/ || exit
 echo "********* Installing Dependencies *******"
 sudo npm install
 
-echo "******* Create group and user *******"
-sudo groupadd csye6225_webapp
-sudo useradd -s /bin/false -g csye6225_webapp -d /opt/csye6225_webapp -m csye6225_webapp
+
+sudo chown -R csye6225_webapp:csye6225_webapp /opt/csye6225/webapp
+sudo chmod -R 750 /opt/csye6225/webapp
 
 sudo cp /tmp/bootup.service /lib/systemd/system/bootup.service
 
