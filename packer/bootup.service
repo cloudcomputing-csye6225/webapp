@@ -1,16 +1,16 @@
 [Unit]
-Description=csye6225_webapp
+Description=csye6225
 ConditionPathExists=/opt/csye6225/webapp/server.js
 After=network.target
 
 [Service]
 Type=simple
-User=csye6225_webapp
-Group=csye6225_webapp
+User=csye6225
+Group=csye6225
 WorkingDirectory=/opt/csye6225/webapp
 ExecStart=/usr/bin/node /opt/csye6225/webapp/server.js
 Restart=always
-RestartSec=10
+RestartSec=3
 
 [Install]
 WantedBy=cloud-init.target
