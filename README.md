@@ -1,4 +1,4 @@
-# WebApp Readme Demo2
+# WebApp Readme
 
 ## Build and Run locally
 
