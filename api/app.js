@@ -11,6 +11,15 @@ const app = express();
 app.disable("x-powered-by");
 
 app.use(express.json());
+
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && "body" in err) {
+    res.status(400).json();
+    return;
+  }
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
