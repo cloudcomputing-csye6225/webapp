@@ -31,8 +31,9 @@ ls -al
 
 echo "********* Installing Cloud agent *******"
 
-sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
-sudo dpkg -i ./amazon-cloudwatch-agent.deb
+sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/debian/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i -E ./amazon-cloudwatch-agent.deb
+sudo rm ./amazon-cloudwatch-agent.deb
 
 cd webapp/ || exit
 
