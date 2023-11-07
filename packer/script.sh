@@ -28,6 +28,12 @@ sudo mkdir webapp
 sudo unzip webapp.zip -d webapp
 
 ls -al
+
+echo "********* Installing Cloud agent *******"
+
+sudo wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+sudo dpkg -i ./amazon-cloudwatch-agent.deb
+
 cd webapp/ || exit
 
 echo "********* Installing Dependencies *******"
