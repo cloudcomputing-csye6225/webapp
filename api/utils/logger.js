@@ -1,5 +1,3 @@
-// const winston = require('winston');
-
 import winston from 'winston';
 
 const { combine, timestamp, printf, splat} = winston.format;
