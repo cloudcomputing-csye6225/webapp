@@ -18,7 +18,7 @@ router
   .get(checkPayloadBody, assignmentController.getAll)
   .post(checkPayLoadForPost(schemaFields, optionalFields), assignmentController.post)
   .all((req, res) => {
-    setResponse(res, 405);
+    setResponse(req,res, 405);
   });
 
 router
@@ -30,7 +30,7 @@ router
     assignmentController.updateById
   )
   .all((req, res) => {
-    setResponse(res, 405);
+    setResponse(req,res, 405);
   });
 
 export default router;

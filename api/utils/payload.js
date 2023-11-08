@@ -3,7 +3,7 @@ import { setResponse } from "./response.js";
 export const checkPayloadBody = (req, res, next) => {
   const check = Object.keys(req.body).length || Object.keys(req.query).length;
   if (check) {
-    setResponse(res, 400);
+    setResponse(req,res, 400);
   } else {
     return next();
   }
@@ -13,7 +13,7 @@ export const checkPayLoadForPost = (compulsory, optional) => {
   return (req, res, next) => {
     const params = Object.keys(req.query).length;
     if (params) {
-      setResponse(res, 400);
+      setResponse(req,res, 400);
       return;
     }
     const check = Object.keys(req.body).length;
@@ -21,7 +21,7 @@ export const checkPayLoadForPost = (compulsory, optional) => {
       const keys = Object.keys(req.body);
       const missing = compulsory.filter((item) => !keys.includes(item));
       if (missing.length) {
-        setResponse(
+        setResponse(req,
           res,
           400,
           `Missing compulsory fields: ${missing.join(", ")}`
@@ -31,7 +31,7 @@ export const checkPayLoadForPost = (compulsory, optional) => {
           (item) => !compulsory.includes(item) && !optional.includes(item)
         );
         if (extra.length) {
-          setResponse(res, 400, `Extra fields: ${extra.join(", ")}`);
+          setResponse(req,res, 400, `Extra fields: ${extra.join(", ")}`);
         } else {
           optional.forEach((item) => {
             if (req.body[item]) {
@@ -42,7 +42,7 @@ export const checkPayLoadForPost = (compulsory, optional) => {
         }
       }
     } else {
-      setResponse(res, 400);
+      setResponse(req,res, 400);
     }
   };
 };
@@ -51,7 +51,7 @@ export const checkPayLoadForPutRequest = (schema, optional) => {
   return (req, res, next) => {
     const params = Object.keys(req.query).length;
     if (params) {
-      setResponse(res, 400);
+      setResponse(req,res, 400);
       return;
     }
     const requestBodyKeys = Object.keys(req.body);
@@ -68,7 +68,7 @@ export const checkPayLoadForPutRequest = (schema, optional) => {
 
     if (hasInvalidProperties || !hasSchemaProperties) {
       // If there are invalid properties or no properties from the schema, return a 400 Bad Request response
-      setResponse(res, 400);
+      setResponse(req,res, 400);
     } else {
       // Remove optional properties from the request body
       for (const key of optional) {
