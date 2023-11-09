@@ -1,7 +1,7 @@
 import { setResponse } from "./response.js";
 
 export const checkPayloadBody = (req, res, next) => {
-  const check = Object.keys(req.body).length || Object.keys(req.query).length;
+  const check = Object.keys(req.body).length || Object.keys(req.query).length || req.get("Content-Length") > 0;
   if (check) {
     setResponse(req,res, 400);
   } else {
