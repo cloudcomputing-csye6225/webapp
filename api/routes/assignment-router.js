@@ -11,6 +11,10 @@ const schemaFields = ["name", "points", "num_of_attempts", "deadline"];
 
 const optionalFields = ["assignment_created", "assignment_updated"];
 
+const submitAssgnSchemaFields = ["submission_url"];
+
+const submitAssgOptionalFields = ["submission_date", "submission_updated"];
+
 const router = express.Router();
 
 router
@@ -31,6 +35,13 @@ router
   )
   .all((req, res) => {
     setResponse(req,res, 405);
+  });
+
+router
+  .route("/:id/submission")
+  .post(checkPayLoadForPost(submitAssgnSchemaFields, submitAssgOptionalFields),assignmentController.postAssignmentSubmission)
+  .all((req, res) => {
+    setResponse(req, res, 405);
   });
 
 export default router;

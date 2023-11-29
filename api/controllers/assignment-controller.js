@@ -84,3 +84,22 @@ export const updateById = async (request, response) => {
   }
 };
 
+export const postAssignmentSubmission = async (request, response) => {
+  statsd.increment("assignment.postAssignmentSubmission");
+  try {
+    const submission = await assignmentService.submitAssignment(
+      request.params.id,
+      request.body.submission_url,
+      request.user
+    );
+    setResponse(request, response, 201, submission);
+
+  } catch (error) {
+    if (error instanceof Sequelize.DatabaseError) {
+      error = error.message;
+    } else if (error instanceof Sequelize.ValidationError) {
+      error = error.errors[0].message;
+    }
+    setResponse(request, response, 400, error);
+  }
+};
