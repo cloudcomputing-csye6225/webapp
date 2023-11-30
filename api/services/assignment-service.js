@@ -18,8 +18,6 @@ export const getAssignment = async (id, AccountId) => {
   return assignment;
 };
 
-
-
 export const deleteAssignment = async (id, AccountId) => {
   const status = await getAssignmentsByAccountId(id, AccountId);
 
@@ -58,13 +56,8 @@ export const getAssignmentsByAccountId = async (id, AccountId) => {
 };
 
 export const submitAssignment = async (assignment_id, submission_url, user) => {
-
-
-
   const assignment = await Assignment.findByPk(assignment_id);
-
   
-
   if (!assignment) {
     return { status: 404, message: "Assignment not found" };
   }
@@ -95,8 +88,7 @@ export const submitAssignment = async (assignment_id, submission_url, user) => {
 
   await publishMessageToSns(JSON.stringify(message));
 
-  return  submission;
-
+  return submission;
 };
 
 export const getSubmissionAttempts = async (assignment_id) => {
