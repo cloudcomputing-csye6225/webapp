@@ -1,4 +1,6 @@
 webapp.zip
+csr.pem
+private.key
 
 # Logs
 logs

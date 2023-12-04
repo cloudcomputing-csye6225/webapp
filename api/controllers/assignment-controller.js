@@ -11,7 +11,7 @@ export const post = async (request, response) => {
       request.body,
       request.user.AccountId
     );
-    setResponse(request,response, 201, assignment);
+    setResponse(request, response, 201, assignment);
   } catch (error) {
     if (error instanceof Sequelize.DatabaseError) {
       error = error.message;
@@ -19,7 +19,7 @@ export const post = async (request, response) => {
       error = error.errors[0].message;
     }
 
-    setResponse(request,response, 400, error);
+    setResponse(request, response, 400, error);
   }
 };
 
@@ -28,9 +28,9 @@ export const getAll = async (request, response) => {
 
   try {
     const assignments = await assignmentService.getAllAssignments();
-    setResponse(request,response, 200, assignments);
+    setResponse(request, response, 200, assignments);
   } catch (error) {
-    setResponse(request,response, 400, error);
+    setResponse(request, response, 400, error);
   }
 };
 
@@ -42,12 +42,11 @@ export const deleteById = async (request, response) => {
       request.params.id,
       request.user.AccountId
     );
-    setResponse(request,response, status);
+    setResponse(request, response, status);
   } catch (error) {
-    setResponse(request,response, 400, error);
+    setResponse(request, response, 400, error);
   }
 };
-
 
 export const getById = async (request, response) => {
   statsd.increment("assignment.getById");
@@ -55,12 +54,12 @@ export const getById = async (request, response) => {
   try {
     const assignment = await assignmentService.getAssignment(request.params.id);
     if (assignment) {
-      setResponse(request,response, 200, assignment);
+      setResponse(request, response, 200, assignment);
     } else {
-      setResponse(request,response, 404);
+      setResponse(request, response, 404);
     }
   } catch (error) {
-    setResponse(request,response, 400, error);
+    setResponse(request, response, 400, error);
   }
 };
 
@@ -72,7 +71,7 @@ export const updateById = async (request, response) => {
       request.body,
       request.user.AccountId
     );
-    setResponse(request,response, status);
+    setResponse(request, response, status);
   } catch (error) {
     if (error instanceof Sequelize.DatabaseError) {
       error = error.message;
@@ -80,20 +79,19 @@ export const updateById = async (request, response) => {
       error = error.errors[0].message;
     }
 
-    setResponse(request,response, 400, error);
+    setResponse(request, response, 400, error);
   }
 };
 
 export const postAssignmentSubmission = async (request, response) => {
   statsd.increment("assignment.postAssignmentSubmission");
   try {
-    const submission = await assignmentService.submitAssignment(
+    const { status, submission } = await assignmentService.submitAssignment(
       request.params.id,
       request.body.submission_url,
       request.user
     );
-    setResponse(request, response, 201, submission);
-
+    setResponse(request, response, status, submission);
   } catch (error) {
     if (error instanceof Sequelize.DatabaseError) {
       error = error.message;
