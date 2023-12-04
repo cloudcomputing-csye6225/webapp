@@ -100,7 +100,7 @@ jobs:
           sudo apt-get install jq
           ami_id=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d':' -f2)
           echo "AMI ID: $ami_id"
-          echo "AMI_BUILD_ID=$ami_id" >> $GITHUB_ENV
+          echo "AMI_ID=$ami_id" >> $GITHUB_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
