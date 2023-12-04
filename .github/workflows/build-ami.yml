@@ -105,21 +105,18 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{secrets.AWS_DEV_ACCESS_KEY_ID}}
-          aws-secret-access-key: ${{secrets.AWS_DEV_SECRET_ACCESS_KEY}}
+          aws-access-key-id: ${{secrets.AWS_DEMO_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_DEMO_SECRET_ACCESS_KEY}}
           aws-region: ${{secrets.AWS_REGION}}
 
       - name: Update Launch Template and Trigger Instance Refresh
         run: |
           # Update Launch Template version with the latest AMI ID
           aws ec2 create-launch-template-version --launch-template-id ${{ secrets.LAUNCH_TEMPLATE_ID }} --version-description WebVersion2 --source-version ${{vars.VERSION}} --launch-template-data '{"ImageId":"${{ env.AMI_ID }}"}'
-
-          # Issue command to auto-scaling group for instance refresh
           aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ secrets.AUTO_SCALING_GROUP_NAME }}
 
       - name: Wait for Instance Refresh to Complete
         run: |
-          # Use AWS CLI to check the status of instance refresh
           status=$(aws autoscaling describe-instance-refreshes --auto-scaling-group-name ${{ secrets.AUTO_SCALING_GROUP_NAME }} --query 'InstanceRefreshes[0].Status' --output text)
           while [[ "$status" != "Successful" && "$status" != "Failed" ]]; do
             sleep 60
