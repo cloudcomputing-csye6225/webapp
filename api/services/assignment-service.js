@@ -57,38 +57,36 @@ export const getAssignmentsByAccountId = async (id, AccountId) => {
 
 export const submitAssignment = async (assignment_id, submission_url, user) => {
   const assignment = await Assignment.findByPk(assignment_id);
-  
+
   if (!assignment) {
-    return { status: 404, message: "Assignment not found" };
+    return { status: 404, submission: "Assignment not found" };
   }
 
   const currentDate = new Date();
-  if (currentDate > new Date(assignment.deadline)) {
-    return { status: 400, message: "Assignment deadline has passed" };
-  }
-
   const submissionAttempts = await getSubmissionAttempts(assignment_id);
-  if (submissionAttempts.length >= assignment.num_of_attempts) {
-    return { status: 400, message: "Exceeded number of attempts" };
+  if (currentDate > new Date(assignment.deadline)) {
+    return { status: 400, submission: "Assignment deadline has passed" };
+  } else if (submissionAttempts.length >= assignment.num_of_attempts) {
+    return { status: 400, submission: "Exceeded number of attempts" };
+  } else {
+    const submission = await Submission.create({
+      assignment_id,
+      submission_url,
+    });
+
+    const message = {
+      submission_url: submission.submission_url,
+      email: user.email,
+      assignment_id: assignment.id,
+      account_id: user.AccountId,
+    };
+
+    console.log(message);
+
+    await publishMessageToSns(JSON.stringify(message));
+
+    return { status: 201, submission };
   }
-
-  const submission = await Submission.create({
-    assignment_id,
-    submission_url,
-    // submission_date: new Date().toISOString(),
-  });
-
-  const message = {
-    submission_url: submission.submission_url,
-    email: user.email,
-    assignment_id: assignment.id,
-  };
-
-  console.log(message);
-
-  await publishMessageToSns(JSON.stringify(message));
-
-  return submission;
 };
 
 export const getSubmissionAttempts = async (assignment_id) => {
