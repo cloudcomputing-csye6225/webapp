@@ -17,6 +17,17 @@ const Submission = databaseConnection.define(
     submission_url: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isURL: {
+          protocols: ["http", "https"],
+          requireProtocol: true,
+        },
+        valueEndingWithZip(value) {
+          if (!value.endsWith(".zip")) {
+            throw new Error("Submission URL should end with .zip extension");
+          }
+        },
+      },
     },
   },
   {
