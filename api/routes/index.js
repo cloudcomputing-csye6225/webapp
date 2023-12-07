@@ -7,7 +7,7 @@ import { checkHealth } from "../utils/check-health.js";
 export default (app) => {
   app.use("/healthz", connectionRouter);
 
-  app.use("/v1/assignments",checkHealth, authenticate, assignmentRouter);
+  app.use("/demo/assignments",checkHealth, authenticate, assignmentRouter);
 
   app.use((req, res) => {
     setResponse(req,res, 404);
